@@ -78,6 +78,12 @@ export default function Flashcard({
     setHasViewedExplanation(true);
   };
 
+  const handleRetry = () => {
+    setSelectedOption(null);
+    setShowExplanation(false);
+    setHasViewedExplanation(false);
+  };
+
   return (
     <div 
       className="relative w-full max-w-2xl mx-auto perspective-1000"
@@ -123,6 +129,12 @@ export default function Flashcard({
                   View Explanation
                 </button>
               )}
+              <button
+                onClick={handleRetry}
+                className="mt-4 px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors text-sm md:text-base"
+              >
+                Try Again
+              </button>
             </div>
           )}
           <div className="mt-6 flex justify-between">

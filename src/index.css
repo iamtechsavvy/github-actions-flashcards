@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-<<<<<<< HEAD
 @layer utilities {
   .rotate-y-180 {
     transform: rotateY(180deg);
@@ -14,11 +13,7 @@
 }
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-=======
-:root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
->>>>>>> cf0a4d45e91addaa8a6f32eb20bf3cb93c5f3736
   line-height: 1.5;
   font-weight: 400;
 
@@ -43,11 +38,8 @@ a:hover {
 
 body {
   margin: 0;
-<<<<<<< HEAD
-=======
   display: flex;
   place-items: center;
->>>>>>> cf0a4d45e91addaa8a6f32eb20bf3cb93c5f3736
   min-width: 320px;
   min-height: 100vh;
 }
