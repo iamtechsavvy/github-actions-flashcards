@@ -70,12 +70,8 @@ export default function Flashcard({
     setSelectedOption(option);
     if (option === correctAnswer) {
       onCorrect();
+      setShowExplanation(true);
     }
-  };
-
-  const handleViewExplanation = () => {
-    setShowExplanation(true);
-    setHasViewedExplanation(true);
   };
 
   const handleRetry = () => {
@@ -114,20 +110,10 @@ export default function Flashcard({
           </div>
           {selectedOption && (
             <div className="mt-6 flex flex-col items-center space-y-4">
-              <p className={`text-lg font-medium ${
-                selectedOption === correctAnswer ? 'text-green-600' : 'text-red-600'
-              }`}>
-                {selectedOption === correctAnswer
-                  ? '✅ Correct!'
-                  : '❌ Incorrect. Try again!'}
-              </p>
               {selectedOption === correctAnswer && (
-                <button
-                  onClick={handleViewExplanation}
-                  className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm md:text-base"
-                >
-                  View Explanation
-                </button>
+                <p className="text-lg font-medium text-green-600">
+                  ✅ Correct!
+                </p>
               )}
               <button
                 onClick={handleRetry}
@@ -137,49 +123,52 @@ export default function Flashcard({
               </button>
             </div>
           )}
-          <div className="mt-6 flex justify-between">
-            <button
-              onClick={onPrevious}
-              disabled={isFirstCard}
-              className={`px-4 py-2 rounded-lg ${
-                isFirstCard
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              } transition-colors text-sm md:text-base`}
-            >
-              ← Previous
-            </button>
-            {selectedOption === correctAnswer && hasViewedExplanation && (
-              <button
-                onClick={onNext}
-                disabled={isLastCard}
-                className={`px-4 py-2 rounded-lg ${
-                  isLastCard
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                    : 'bg-blue-500 text-white hover:bg-blue-600'
-                } transition-colors text-sm md:text-base`}
-              >
-                Next →
-              </button>
-            )}
-          </div>
         </div>
 
         {/* Back of card */}
-        <div className="absolute inset-0 bg-white rounded-xl shadow-lg p-6 md:p-8 backface-hidden rotate-y-180">
-          <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-4">
-            Explanation
-          </h3>
-          <p className="text-gray-600 text-sm md:text-base whitespace-pre-wrap">
-            {explanation}
-          </p>
+        {showExplanation && (
+          <div className="absolute inset-0 bg-white rounded-xl shadow-lg p-6 md:p-8 backface-hidden rotate-y-180">
+            <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-4">
+              Explanation
+            </h3>
+            <p className="text-gray-600 text-sm md:text-base whitespace-pre-wrap">
+              {explanation}
+            </p>
+            <button
+              onClick={() => setShowExplanation(false)}
+              className="mt-6 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm md:text-base"
+            >
+              Back to Question
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Navigation buttons */}
+      <div className="mt-6 flex justify-between">
+        <button
+          onClick={onPrevious}
+          disabled={isFirstCard}
+          className={`px-4 py-2 rounded-lg ${
+            isFirstCard
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          } transition-colors text-sm md:text-base`}
+        >
+          ← Previous
+        </button>
+        {selectedOption === correctAnswer && hasViewedExplanation && !isLastCard && (
           <button
-            onClick={() => setShowExplanation(false)}
-            className="mt-6 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm md:text-base"
+            onClick={onNext}
+            className={`px-4 py-2 rounded-lg ${
+              isLastCard
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                : 'bg-blue-500 text-white hover:bg-blue-600'
+            } transition-colors text-sm md:text-base`}
           >
-            Back to Question
+            Next →
           </button>
-        </div>
+        )}
       </div>
     </div>
   );
