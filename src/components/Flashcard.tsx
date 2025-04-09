@@ -1,147 +1,173 @@
-import { useState } from 'react';
+import { useState, useEffect, TouchEvent } from 'react';
 
 interface FlashcardProps {
   question: string;
-  answer: string;
   options: string[];
+  correctAnswer: string;
   explanation: string;
   onNext: () => void;
-  onCorrect: () => void;
   onPrevious: () => void;
+  onCorrect: () => void;
   isFirstCard: boolean;
   isLastCard: boolean;
 }
 
-export default function Flashcard({ 
-  question, 
-  answer, 
-  options, 
-  explanation, 
+export default function Flashcard({
+  question,
+  options,
+  correctAnswer,
+  explanation,
   onNext,
   onPrevious,
+  onCorrect,
   isFirstCard,
   isLastCard,
-  onCorrect
 }: FlashcardProps) {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [hasViewedExplanation, setHasViewedExplanation] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
 
-  const handleOptionSelect = (option: string) => {
-    setSelectedOption(option);
-    if (option === answer) {
-      onCorrect();
-      setShowExplanation(true);
+  useEffect(() => {
+    setSelectedOption(null);
+    setShowExplanation(false);
+    setHasViewedExplanation(false);
+  }, [question]);
+
+  const handleTouchStart = (e: TouchEvent) => {
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: TouchEvent) => {
+    if (!touchStart) return;
+
+    const touchEnd = e.changedTouches[0].clientX;
+    const diff = touchStart - touchEnd;
+
+    // Swipe threshold of 50px
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && !isLastCard) {
+        // Swipe left
+        onNext();
+      } else if (diff < 0 && !isFirstCard) {
+        // Swipe right
+        onPrevious();
+      }
     }
-  };
 
-  const handleNext = () => {
-    setSelectedOption(null);
-    setShowExplanation(false);
-    setHasViewedExplanation(false);
-    onNext();
-  };
-
-  const handlePrevious = () => {
-    setSelectedOption(null);
-    setShowExplanation(false);
-    setHasViewedExplanation(false);
-    onPrevious();
-  };
-
-  const handleRetry = () => {
-    setSelectedOption(null);
-    setShowExplanation(false);
-    setHasViewedExplanation(false);
-  };
-
-  const handleAcknowledge = () => {
-    setHasViewedExplanation(true);
-    handleNext();
+    setTouchStart(null);
   };
 
   const getOptionStyle = (option: string) => {
-    if (!selectedOption) return 'bg-white hover:bg-gray-50 border-gray-200 text-gray-800';
-    if (option === selectedOption && option === answer) return 'bg-green-100 border-green-500 text-green-800';
-    if (option === selectedOption && option !== answer) return 'bg-red-100 border-red-500 text-red-800';
-    return 'bg-white border-gray-200 text-gray-800';
+    if (!selectedOption) return 'bg-white text-gray-700 hover:bg-gray-50';
+    if (option === correctAnswer) return 'bg-green-100 text-green-700 border-green-500';
+    if (option === selectedOption) return 'bg-red-100 text-red-700 border-red-500';
+    return 'bg-white text-gray-400';
+  };
+
+  const handleOptionSelect = (option: string) => {
+    if (selectedOption) return;
+    setSelectedOption(option);
+    if (option === correctAnswer) {
+      onCorrect();
+    }
+  };
+
+  const handleViewExplanation = () => {
+    setShowExplanation(true);
+    setHasViewedExplanation(true);
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">{question}</h2>
-        <div className="space-y-3">
-          {options.map((option, index) => (
-            <button
-              key={index}
-              className={`w-full p-3 rounded-lg text-left transition-colors border ${getOptionStyle(option)}`}
-              onClick={() => handleOptionSelect(option)}
-              disabled={selectedOption !== null}
-            >
-              {option}
-            </button>
-          ))}
-        </div>
-        {selectedOption && (
-          <div className={`mt-4 p-3 rounded-lg text-center font-medium ${
-            selectedOption === answer ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-          }`}>
-            {selectedOption === answer ? 'Correct! 🎉' : 'Incorrect 😕'}
-            {selectedOption !== answer && (
-              <button 
-                className="ml-2 text-sm underline"
-                onClick={handleRetry}
+    <div 
+      className="relative w-full max-w-2xl mx-auto perspective-1000"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      <div className={`relative w-full transform transition-transform duration-500 ${
+        showExplanation ? 'rotate-y-180' : ''
+      } preserve-3d`}>
+        {/* Front of card */}
+        <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
+          <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-6">
+            {question}
+          </h2>
+          <div className="space-y-3">
+            {options.map((option, index) => (
+              <button
+                key={index}
+                onClick={() => handleOptionSelect(option)}
+                disabled={!!selectedOption}
+                className={`w-full p-4 text-left rounded-lg border-2 transition-colors duration-200 ${getOptionStyle(
+                  option
+                )}`}
               >
-                Try Again
+                <span className="text-sm md:text-base">{option}</span>
+              </button>
+            ))}
+          </div>
+          {selectedOption && (
+            <div className="mt-6 flex flex-col items-center space-y-4">
+              <p className={`text-lg font-medium ${
+                selectedOption === correctAnswer ? 'text-green-600' : 'text-red-600'
+              }`}>
+                {selectedOption === correctAnswer
+                  ? '✅ Correct!'
+                  : '❌ Incorrect. Try again!'}
+              </p>
+              {selectedOption === correctAnswer && (
+                <button
+                  onClick={handleViewExplanation}
+                  className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm md:text-base"
+                >
+                  View Explanation
+                </button>
+              )}
+            </div>
+          )}
+          <div className="mt-6 flex justify-between">
+            <button
+              onClick={onPrevious}
+              disabled={isFirstCard}
+              className={`px-4 py-2 rounded-lg ${
+                isFirstCard
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              } transition-colors text-sm md:text-base`}
+            >
+              ← Previous
+            </button>
+            {selectedOption === correctAnswer && hasViewedExplanation && (
+              <button
+                onClick={onNext}
+                disabled={isLastCard}
+                className={`px-4 py-2 rounded-lg ${
+                  isLastCard
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-blue-500 text-white hover:bg-blue-600'
+                } transition-colors text-sm md:text-base`}
+              >
+                Next →
               </button>
             )}
           </div>
-        )}
-      </div>
-
-      {/* Explanation Panel */}
-      {showExplanation && (
-        <div className="mt-4 bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-xl font-semibold mb-4 text-gray-800">Explanation</h3>
-          <div className="prose prose-sm max-w-none">
-            <p className="text-gray-600 whitespace-pre-wrap">{explanation}</p>
-          </div>
-          {!hasViewedExplanation && (
-            <button
-              onClick={handleAcknowledge}
-              className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
-            >
-              {isLastCard ? 'I Understand - Show Results' : 'I Understand - Continue to Next Question'}
-            </button>
-          )}
         </div>
-      )}
 
-      {/* Navigation buttons */}
-      <div className="flex justify-between mt-4">
-        <button
-          onClick={handlePrevious}
-          disabled={isFirstCard}
-          className={`px-4 py-2 rounded-lg ${
-            isFirstCard
-              ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
-              : 'bg-blue-500 text-white hover:bg-blue-600'
-          }`}
-        >
-          ← Previous
-        </button>
-        <button
-          onClick={handleNext}
-          disabled={isLastCard || (showExplanation && !hasViewedExplanation)}
-          className={`px-4 py-2 rounded-lg ${
-            isLastCard || (showExplanation && !hasViewedExplanation)
-              ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
-              : 'bg-blue-500 text-white hover:bg-blue-600'
-          }`}
-        >
-          {isLastCard ? 'Finish Quiz' : 'Next →'}
-        </button>
+        {/* Back of card */}
+        <div className="absolute inset-0 bg-white rounded-xl shadow-lg p-6 md:p-8 backface-hidden rotate-y-180">
+          <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-4">
+            Explanation
+          </h3>
+          <p className="text-gray-600 text-sm md:text-base whitespace-pre-wrap">
+            {explanation}
+          </p>
+          <button
+            onClick={() => setShowExplanation(false)}
+            className="mt-6 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm md:text-base"
+          >
+            Back to Question
+          </button>
+        </div>
       </div>
     </div>
   );
