@@ -164,6 +164,336 @@
       ],
       "correctAnswer": "A way to access information about workflow runs",
       "explanation": "Contexts are a way to access information about workflow runs, variables, runner environments, jobs, and steps. They are accessed using expressions and provide valuable information for making decisions in your workflows."
+    },
+    {
+      "question": "What is the correct YAML syntax for defining a GitHub Actions workflow?",
+      "options": [
+        "name: Workflow Name\ntrigger: push\njobs: {...}",
+        "workflow: My Workflow\nevents: [push]\ntasks: {...}",
+        "title: Workflow\ntriggers: push\nsteps: {...}",
+        "id: workflow\nevent: push\nactions: {...}"
+      ],
+      "correctAnswer": "name: Workflow Name\ntrigger: push\njobs: {...}",
+      "explanation": "The correct YAML syntax for a GitHub Actions workflow includes a name, trigger(s), and jobs. The name is optional but recommended, the trigger defines when the workflow runs, and jobs contain the steps to execute."
+    },
+    {
+      "question": "How do you define a job in a GitHub Actions workflow?",
+      "options": [
+        "jobs:\n  build:\n    runs-on: ubuntu-latest\n    steps: [...]",
+        "tasks:\n  build:\n    environment: ubuntu\n    actions: [...]",
+        "work:\n  build:\n    platform: ubuntu\n    tasks: [...]",
+        "processes:\n  build:\n    os: ubuntu\n    commands: [...]"
+      ],
+      "correctAnswer": "jobs:\n  build:\n    runs-on: ubuntu-latest\n    steps: [...]",
+      "explanation": "Jobs are defined under the 'jobs' key in a workflow file. Each job has a unique identifier (like 'build') and specifies the runner environment with 'runs-on'. The job then contains a list of steps to execute."
+    },
+    {
+      "question": "How do you define a step in a GitHub Actions job?",
+      "options": [
+        "steps:\n  - name: Checkout code\n    uses: actions/checkout@v2",
+        "actions:\n  - title: Checkout code\n    action: actions/checkout@v2",
+        "tasks:\n  - label: Checkout code\n    run: actions/checkout@v2",
+        "commands:\n  - description: Checkout code\n    execute: actions/checkout@v2"
+      ],
+      "correctAnswer": "steps:\n  - name: Checkout code\n    uses: actions/checkout@v2",
+      "explanation": "Steps are defined under the 'steps' key in a job. Each step has a name and either uses an action with the 'uses' key or runs commands with the 'run' key. The checkout action is commonly used as the first step to get the repository code."
+    },
+    {
+      "question": "What is the GitHub Actions Marketplace?",
+      "options": [
+        "A place to buy GitHub Actions",
+        "A collection of pre-built actions you can use in your workflows",
+        "A forum for discussing GitHub Actions",
+        "A documentation site for GitHub Actions"
+      ],
+      "correctAnswer": "A collection of pre-built actions you can use in your workflows",
+      "explanation": "The GitHub Actions Marketplace is a collection of pre-built actions that you can use in your workflows. These actions are created by GitHub, the community, and third-party developers to help automate common tasks."
+    },
+    {
+      "question": "How do you use an action from the GitHub Actions Marketplace?",
+      "options": [
+        "Download it and include it in your repository",
+        "Reference it in your workflow using the 'uses' keyword",
+        "Install it using npm or another package manager",
+        "Import it using a special syntax in your workflow"
+      ],
+      "correctAnswer": "Reference it in your workflow using the 'uses' keyword",
+      "explanation": "To use an action from the GitHub Actions Marketplace, you reference it in your workflow using the 'uses' keyword followed by the action's repository path and version. For example: uses: actions/checkout@v2"
+    },
+    {
+      "question": "What is the difference between a GitHub Action and a GitHub Actions workflow?",
+      "options": [
+        "An action is a single task, while a workflow is a collection of jobs and steps",
+        "An action is a workflow file, while a workflow is a running instance",
+        "There is no difference; they are the same thing",
+        "An action is a runner, while a workflow is a job"
+      ],
+      "correctAnswer": "An action is a single task, while a workflow is a collection of jobs and steps",
+      "explanation": "A GitHub Action is a single task that can be reused across workflows, while a GitHub Actions workflow is a configurable automated process that contains one or more jobs, each with multiple steps. Actions are the building blocks that make up workflows."
+    },
+    {
+      "question": "How do you pass inputs to a GitHub Action?",
+      "options": [
+        "Using environment variables",
+        "Using the 'with' keyword",
+        "Using command-line arguments",
+        "Using a configuration file"
+      ],
+      "correctAnswer": "Using the 'with' keyword",
+      "explanation": "You pass inputs to a GitHub Action using the 'with' keyword followed by the input parameters. For example: uses: actions/checkout@v2\n  with:\n    ref: main\n    fetch-depth: 0"
+    },
+    {
+      "question": "How do you set environment variables in a GitHub Actions workflow?",
+      "options": [
+        "Using the 'env' keyword at the workflow, job, or step level",
+        "Using the 'environment' keyword",
+        "Using the 'variables' keyword",
+        "Using the 'config' keyword"
+      ],
+      "correctAnswer": "Using the 'env' keyword at the workflow, job, or step level",
+      "explanation": "You can set environment variables in a GitHub Actions workflow using the 'env' keyword at the workflow, job, or step level. Variables set at a higher level are available to all lower levels, and variables set at a lower level override those set at a higher level."
+    },
+    {
+      "question": "What is the purpose of the GITHUB_TOKEN in GitHub Actions?",
+      "options": [
+        "To authenticate with external services",
+        "To authenticate with the GitHub API",
+        "To encrypt secrets",
+        "To store workflow data"
+      ],
+      "correctAnswer": "To authenticate with the GitHub API",
+      "explanation": "The GITHUB_TOKEN is a special token that GitHub Actions automatically creates for your workflows. It's used to authenticate with the GitHub API, allowing your workflow to perform actions like creating issues, commenting on pull requests, and more."
+    },
+    {
+      "question": "How do you access the GITHUB_TOKEN in a GitHub Actions workflow?",
+      "options": [
+        "Using ${{ secrets.GITHUB_TOKEN }}",
+        "Using ${{ github.token }}",
+        "Using ${{ env.GITHUB_TOKEN }}",
+        "Using ${{ vars.GITHUB_TOKEN }}"
+      ],
+      "correctAnswer": "Using ${{ secrets.GITHUB_TOKEN }}",
+      "explanation": "You access the GITHUB_TOKEN in a GitHub Actions workflow using the expression ${{ secrets.GITHUB_TOKEN }}. This token is automatically available to your workflows and doesn't need to be manually created or stored."
+    },
+    {
+      "question": "What permissions does the GITHUB_TOKEN have by default?",
+      "options": [
+        "Read and write permissions to all repositories",
+        "Read-only permissions to the current repository",
+        "Read and write permissions to the current repository",
+        "No permissions by default"
+      ],
+      "correctAnswer": "Read and write permissions to the current repository",
+      "explanation": "By default, the GITHUB_TOKEN has read and write permissions to the current repository. You can modify these permissions using the 'permissions' keyword in your workflow file to restrict or expand access as needed."
+    },
+    {
+      "question": "How do you restrict the permissions of the GITHUB_TOKEN in a workflow?",
+      "options": [
+        "Using the 'permissions' keyword at the workflow level",
+        "Using the 'restrict' keyword",
+        "Using the 'security' keyword",
+        "Using the 'access' keyword"
+      ],
+      "correctAnswer": "Using the 'permissions' keyword at the workflow level",
+      "explanation": "You can restrict the permissions of the GITHUB_TOKEN in a workflow using the 'permissions' keyword at the workflow level. For example: permissions:\n  contents: read\n  issues: write\nThis restricts the token to read-only access to repository contents and write access to issues."
+    },
+    {
+      "question": "What is the purpose of the 'if' conditional in GitHub Actions?",
+      "options": [
+        "To check if a file exists",
+        "To determine if a step or job should run",
+        "To check if a secret is set",
+        "To determine if a workflow should be triggered"
+      ],
+      "correctAnswer": "To determine if a step or job should run",
+      "explanation": "The 'if' conditional in GitHub Actions is used to determine if a step or job should run. It evaluates an expression and only runs the step or job if the expression evaluates to true. This allows for conditional execution based on various factors."
+    },
+    {
+      "question": "What is the purpose of the 'needs' keyword in GitHub Actions?",
+      "options": [
+        "To specify required dependencies",
+        "To define job dependencies",
+        "To specify required permissions",
+        "To define step dependencies"
+      ],
+      "correctAnswer": "To define job dependencies",
+      "explanation": "The 'needs' keyword in GitHub Actions is used to define job dependencies. It specifies that a job should only run after one or more other jobs have completed successfully. This allows you to create sequential workflows where jobs depend on the output of previous jobs."
+    },
+    {
+      "question": "What is the purpose of the 'strategy' keyword in GitHub Actions?",
+      "options": [
+        "To define deployment strategies",
+        "To define matrix build strategies",
+        "To define testing strategies",
+        "To define caching strategies"
+      ],
+      "correctAnswer": "To define matrix build strategies",
+      "explanation": "The 'strategy' keyword in GitHub Actions is used to define matrix build strategies. It allows you to run a job with different combinations of variables, such as different operating systems, Node.js versions, or other parameters. This is useful for testing your code across multiple environments."
+    },
+    {
+      "question": "What is the purpose of the 'continue-on-error' keyword in GitHub Actions?",
+      "options": [
+        "To continue a workflow even if a step fails",
+        "To continue a job even if a step fails",
+        "To continue a workflow even if a job fails",
+        "To continue a step even if a command fails"
+      ],
+      "correctAnswer": "To continue a job even if a step fails",
+      "explanation": "The 'continue-on-error' keyword in GitHub Actions is used to continue a job even if a step fails. By default, if a step fails, the job stops and is marked as failed. Setting 'continue-on-error: true' allows the job to continue running even if a step fails."
+    },
+    {
+      "question": "What is the purpose of the 'timeout-minutes' keyword in GitHub Actions?",
+      "options": [
+        "To set a timeout for the entire workflow",
+        "To set a timeout for a job",
+        "To set a timeout for a step",
+        "To set a timeout for a runner"
+      ],
+      "correctAnswer": "To set a timeout for a job",
+      "explanation": "The 'timeout-minutes' keyword in GitHub Actions is used to set a timeout for a job. If a job runs longer than the specified number of minutes, it will be automatically cancelled. This helps prevent jobs from running indefinitely and consuming resources."
+    },
+    {
+      "question": "What is the purpose of the 'concurrency' keyword in GitHub Actions?",
+      "options": [
+        "To limit the number of concurrent workflows",
+        "To limit the number of concurrent jobs",
+        "To limit the number of concurrent steps",
+        "To limit the number of concurrent runners"
+      ],
+      "correctAnswer": "To limit the number of concurrent workflows",
+      "explanation": "The 'concurrency' keyword in GitHub Actions is used to limit the number of concurrent workflows. It allows you to specify a concurrency group and a cancellation policy, which can help prevent multiple workflow runs from interfering with each other."
+    },
+    {
+      "question": "What is the purpose of the 'outputs' keyword in GitHub Actions?",
+      "options": [
+        "To define outputs for a workflow",
+        "To define outputs for a job",
+        "To define outputs for a step",
+        "To define outputs for a runner"
+      ],
+      "correctAnswer": "To define outputs for a job",
+      "explanation": "The 'outputs' keyword in GitHub Actions is used to define outputs for a job. These outputs can be used by other jobs in the same workflow. Outputs are set using the 'set-output' command in a step and can be accessed using the 'needs' context in other jobs."
+    },
+    {
+      "question": "What is the purpose of the 'defaults' keyword in GitHub Actions?",
+      "options": [
+        "To set default values for workflow variables",
+        "To set default values for job variables",
+        "To set default values for step variables",
+        "To set default values for runner variables"
+      ],
+      "correctAnswer": "To set default values for job and step variables",
+      "explanation": "The 'defaults' keyword in GitHub Actions is used to set default values for job and step variables. It allows you to define default settings that apply to all jobs or steps in a workflow, reducing repetition and making your workflows more maintainable."
+    },
+    {
+      "question": "What is the purpose of the 'env' keyword in GitHub Actions?",
+      "options": [
+        "To define environment variables for a workflow",
+        "To define environment variables for a job",
+        "To define environment variables for a step",
+        "All of the above"
+      ],
+      "correctAnswer": "All of the above",
+      "explanation": "The 'env' keyword in GitHub Actions can be used at the workflow, job, or step level to define environment variables. Variables set at a higher level are available to all lower levels, and variables set at a lower level override those set at a higher level."
+    },
+    {
+      "question": "What is the purpose of the 'if' conditional in GitHub Actions?",
+      "options": [
+        "To check if a file exists",
+        "To determine if a step or job should run",
+        "To check if a secret is set",
+        "To determine if a workflow should be triggered"
+      ],
+      "correctAnswer": "To determine if a step or job should run",
+      "explanation": "The 'if' conditional in GitHub Actions is used to determine if a step or job should run. It evaluates an expression and only runs the step or job if the expression evaluates to true. This allows for conditional execution based on various factors."
+    },
+    {
+      "question": "What is the purpose of the 'needs' keyword in GitHub Actions?",
+      "options": [
+        "To specify required dependencies",
+        "To define job dependencies",
+        "To specify required permissions",
+        "To define step dependencies"
+      ],
+      "correctAnswer": "To define job dependencies",
+      "explanation": "The 'needs' keyword in GitHub Actions is used to define job dependencies. It specifies that a job should only run after one or more other jobs have completed successfully. This allows you to create sequential workflows where jobs depend on the output of previous jobs."
+    },
+    {
+      "question": "What is the purpose of the 'strategy' keyword in GitHub Actions?",
+      "options": [
+        "To define deployment strategies",
+        "To define matrix build strategies",
+        "To define testing strategies",
+        "To define caching strategies"
+      ],
+      "correctAnswer": "To define matrix build strategies",
+      "explanation": "The 'strategy' keyword in GitHub Actions is used to define matrix build strategies. It allows you to run a job with different combinations of variables, such as different operating systems, Node.js versions, or other parameters. This is useful for testing your code across multiple environments."
+    },
+    {
+      "question": "What is the purpose of the 'continue-on-error' keyword in GitHub Actions?",
+      "options": [
+        "To continue a workflow even if a step fails",
+        "To continue a job even if a step fails",
+        "To continue a workflow even if a job fails",
+        "To continue a step even if a command fails"
+      ],
+      "correctAnswer": "To continue a job even if a step fails",
+      "explanation": "The 'continue-on-error' keyword in GitHub Actions is used to continue a job even if a step fails. By default, if a step fails, the job stops and is marked as failed. Setting 'continue-on-error: true' allows the job to continue running even if a step fails."
+    },
+    {
+      "question": "What is the purpose of the 'timeout-minutes' keyword in GitHub Actions?",
+      "options": [
+        "To set a timeout for the entire workflow",
+        "To set a timeout for a job",
+        "To set a timeout for a step",
+        "To set a timeout for a runner"
+      ],
+      "correctAnswer": "To set a timeout for a job",
+      "explanation": "The 'timeout-minutes' keyword in GitHub Actions is used to set a timeout for a job. If a job runs longer than the specified number of minutes, it will be automatically cancelled. This helps prevent jobs from running indefinitely and consuming resources."
+    },
+    {
+      "question": "What is the purpose of the 'concurrency' keyword in GitHub Actions?",
+      "options": [
+        "To limit the number of concurrent workflows",
+        "To limit the number of concurrent jobs",
+        "To limit the number of concurrent steps",
+        "To limit the number of concurrent runners"
+      ],
+      "correctAnswer": "To limit the number of concurrent workflows",
+      "explanation": "The 'concurrency' keyword in GitHub Actions is used to limit the number of concurrent workflows. It allows you to specify a concurrency group and a cancellation policy, which can help prevent multiple workflow runs from interfering with each other."
+    },
+    {
+      "question": "What is the purpose of the 'outputs' keyword in GitHub Actions?",
+      "options": [
+        "To define outputs for a workflow",
+        "To define outputs for a job",
+        "To define outputs for a step",
+        "To define outputs for a runner"
+      ],
+      "correctAnswer": "To define outputs for a job",
+      "explanation": "The 'outputs' keyword in GitHub Actions is used to define outputs for a job. These outputs can be used by other jobs in the same workflow. Outputs are set using the 'set-output' command in a step and can be accessed using the 'needs' context in other jobs."
+    },
+    {
+      "question": "What is the purpose of the 'defaults' keyword in GitHub Actions?",
+      "options": [
+        "To set default values for workflow variables",
+        "To set default values for job variables",
+        "To set default values for step variables",
+        "To set default values for runner variables"
+      ],
+      "correctAnswer": "To set default values for job and step variables",
+      "explanation": "The 'defaults' keyword in GitHub Actions is used to set default values for job and step variables. It allows you to define default settings that apply to all jobs or steps in a workflow, reducing repetition and making your workflows more maintainable."
+    },
+    {
+      "question": "What is the purpose of the 'env' keyword in GitHub Actions?",
+      "options": [
+        "To define environment variables for a workflow",
+        "To define environment variables for a job",
+        "To define environment variables for a step",
+        "All of the above"
+      ],
+      "correctAnswer": "All of the above",
+      "explanation": "The 'env' keyword in GitHub Actions can be used at the workflow, job, or step level to define environment variables. Variables set at a higher level are available to all lower levels, and variables set at a lower level override those set at a higher level."
     }
   ]
 } 

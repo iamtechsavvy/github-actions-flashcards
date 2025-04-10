@@ -10,6 +10,7 @@ interface FlashcardProps {
   onCorrect: () => void;
   isFirstCard: boolean;
   isLastCard: boolean;
+  disablePrevious: boolean;
 }
 
 export default function Flashcard({
@@ -22,6 +23,7 @@ export default function Flashcard({
   onCorrect,
   isFirstCard,
   isLastCard,
+  disablePrevious,
 }: FlashcardProps) {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
@@ -47,7 +49,7 @@ export default function Flashcard({
       if (diff > 0 && !isLastCard) {
         // Swipe left
         onNext();
-      } else if (diff < 0 && !isFirstCard) {
+      } else if (diff < 0 && !isFirstCard && !disablePrevious) {
         // Swipe right
         onPrevious();
       }
@@ -81,7 +83,7 @@ export default function Flashcard({
 
   if (!question || !options || !correctAnswer || !explanation) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
+      <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 mx-auto max-w-2xl">
         <p className="text-gray-600 text-center">Loading card...</p>
       </div>
     );
@@ -93,8 +95,8 @@ export default function Flashcard({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-6">
+      <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 mx-auto">
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-6 text-center">
           {question}
         </h2>
         <div className="space-y-3">
@@ -146,9 +148,9 @@ export default function Flashcard({
         <div className="mt-6 flex justify-between">
           <button
             onClick={onPrevious}
-            disabled={isFirstCard}
+            disabled={isFirstCard || disablePrevious}
             className={`px-4 py-2 rounded-lg ${
-              isFirstCard
+              isFirstCard || disablePrevious
                 ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             } transition-colors text-sm md:text-base`}
