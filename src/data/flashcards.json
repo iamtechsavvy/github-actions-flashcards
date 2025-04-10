@@ -54,6 +54,116 @@
       ],
       "correctAnswer": "An individual task within a job",
       "explanation": "A step is an individual task within a job. Steps can run commands or actions. Each step in a job executes on the same runner, allowing the actions in that job to share data with each other."
+    },
+    {
+      "question": "What is a GitHub Actions runner?",
+      "options": [
+        "A virtual machine that runs your workflow",
+        "A type of workflow file",
+        "A deployment tool",
+        "A testing framework"
+      ],
+      "correctAnswer": "A virtual machine that runs your workflow",
+      "explanation": "A runner is a virtual machine that runs your workflow. GitHub provides hosted runners with different operating systems, or you can host your own runners. Each runner can run one job at a time."
+    },
+    {
+      "question": "What is a GitHub Actions event?",
+      "options": [
+        "A scheduled time to run workflows",
+        "A trigger that starts a workflow",
+        "A type of job",
+        "A deployment status"
+      ],
+      "correctAnswer": "A trigger that starts a workflow",
+      "explanation": "An event is a specific activity in a repository that triggers a workflow run. Common events include push, pull_request, issue, and release. You can also schedule workflows to run at specific times using the schedule event."
+    },
+    {
+      "question": "What is a GitHub Actions artifact?",
+      "options": [
+        "A type of workflow file",
+        "A stored piece of data from a workflow run",
+        "A deployment package",
+        "A testing result"
+      ],
+      "correctAnswer": "A stored piece of data from a workflow run",
+      "explanation": "Artifacts are files that are generated during a workflow run and can be stored for later use. They can be used to pass data between jobs or to store build outputs, test results, or any other files generated during the workflow."
+    },
+    {
+      "question": "What is a GitHub Actions secret?",
+      "options": [
+        "A hidden workflow file",
+        "An encrypted environment variable",
+        "A type of runner",
+        "A deployment key"
+      ],
+      "correctAnswer": "An encrypted environment variable",
+      "explanation": "Secrets are encrypted environment variables that you create in your repository or organization. They allow you to store sensitive information like API keys and passwords that your workflows can access securely."
+    },
+    {
+      "question": "What is a GitHub Actions matrix?",
+      "options": [
+        "A type of workflow file",
+        "A way to run jobs in parallel with different configurations",
+        "A deployment strategy",
+        "A testing framework"
+      ],
+      "correctAnswer": "A way to run jobs in parallel with different configurations",
+      "explanation": "A matrix allows you to run a job with different combinations of variables. For example, you can test your code against multiple versions of Node.js or multiple operating systems in parallel."
+    },
+    {
+      "question": "What is a GitHub Actions environment?",
+      "options": [
+        "The operating system of the runner",
+        "A collection of protection rules and secrets",
+        "A type of workflow",
+        "A deployment target"
+      ],
+      "correctAnswer": "A collection of protection rules and secrets",
+      "explanation": "Environments are used to describe a general deployment target like production, staging, or development. They can have protection rules and environment-specific secrets that are only available to jobs that reference the environment."
+    },
+    {
+      "question": "What is a GitHub Actions cache?",
+      "options": [
+        "A stored workflow file",
+        "A way to store dependencies between workflow runs",
+        "A deployment package",
+        "A testing result"
+      ],
+      "correctAnswer": "A way to store dependencies between workflow runs",
+      "explanation": "The cache action allows you to store dependencies and other frequently accessed files between workflow runs. This can significantly speed up your workflows by avoiding the need to download and install dependencies on every run."
+    },
+    {
+      "question": "What is a GitHub Actions reusable workflow?",
+      "options": [
+        "A workflow that can be called from other workflows",
+        "A type of job",
+        "A deployment strategy",
+        "A testing framework"
+      ],
+      "correctAnswer": "A workflow that can be called from other workflows",
+      "explanation": "Reusable workflows allow you to define a workflow once and then reuse it in multiple other workflows. This helps reduce duplication and makes your workflows more maintainable."
+    },
+    {
+      "question": "What is a GitHub Actions conditional?",
+      "options": [
+        "A type of workflow file",
+        "An expression that determines if a step or job should run",
+        "A deployment strategy",
+        "A testing framework"
+      ],
+      "correctAnswer": "An expression that determines if a step or job should run",
+      "explanation": "Conditionals in GitHub Actions use expressions to determine if a step or job should run. They can check variables, secrets, and other context values to make decisions about workflow execution."
+    },
+    {
+      "question": "What is a GitHub Actions context?",
+      "options": [
+        "A type of workflow file",
+        "A way to access information about workflow runs",
+        "A deployment strategy",
+        "A testing framework"
+      ],
+      "correctAnswer": "A way to access information about workflow runs",
+      "explanation": "Contexts are a way to access information about workflow runs, variables, runner environments, jobs, and steps. They are accessed using expressions and provide valuable information for making decisions in your workflows."
     }
   ]
 } 
