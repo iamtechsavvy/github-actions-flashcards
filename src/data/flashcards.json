@@ -1,0 +1,59 @@
+{
+  "flashcards": [
+    {
+      "question": "What is a GitHub Action?",
+      "options": [
+        "A feature to automatically merge pull requests",
+        "A way to automate software workflows",
+        "A tool for code review",
+        "A method to deploy applications"
+      ],
+      "correctAnswer": "A way to automate software workflows",
+      "explanation": "GitHub Actions is a continuous integration and continuous deployment (CI/CD) platform that allows you to automate your build, test, and deployment pipeline. It lets you create custom workflows that automatically build and test every pull request to your repository, or deploy merged pull requests to production."
+    },
+    {
+      "question": "Where are GitHub Actions workflow files stored?",
+      "options": [
+        "In the root directory",
+        "In the .github/workflows directory",
+        "In the .actions directory",
+        "In the config directory"
+      ],
+      "correctAnswer": "In the .github/workflows directory",
+      "explanation": "GitHub Actions workflow files are stored in the .github/workflows directory of your repository. These files are written in YAML and define the steps that should be executed when specific events occur in your repository."
+    },
+    {
+      "question": "What is a GitHub Actions workflow?",
+      "options": [
+        "A collection of automated tasks",
+        "A configurable automated process",
+        "A set of manual steps",
+        "A deployment script"
+      ],
+      "correctAnswer": "A configurable automated process",
+      "explanation": "A GitHub Actions workflow is a configurable automated process that you set up in your repository. It's made up of one or more jobs and can be triggered by various events, such as pushing code or creating a pull request."
+    },
+    {
+      "question": "What is a GitHub Actions job?",
+      "options": [
+        "A single step in a workflow",
+        "A set of steps that run on the same runner",
+        "A deployment process",
+        "A testing procedure"
+      ],
+      "correctAnswer": "A set of steps that run on the same runner",
+      "explanation": "A job is a set of steps that run on the same runner. Each job runs in a fresh instance of the virtual environment and can have its own set of steps. Jobs can run in parallel or sequentially depending on your needs."
+    },
+    {
+      "question": "What is a GitHub Actions step?",
+      "options": [
+        "A complete workflow",
+        "An individual task within a job",
+        "A deployment stage",
+        "A testing phase"
+      ],
+      "correctAnswer": "An individual task within a job",
+      "explanation": "A step is an individual task within a job. Steps can run commands or actions. Each step in a job executes on the same runner, allowing the actions in that job to share data with each other."
+    }
+  ]
+} 
